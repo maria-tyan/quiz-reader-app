@@ -1,15 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <AppQuestion
+    :question="data[count]"
+    :counter="`${count + 1}/${data.length}`"
+    @next="count < data.length - 1 ? count++ : null"
+    @prev="count > 0 ? count-- : null"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import AppQuestion from './components/AppQuestion.vue'
+import data from './assets/data.json'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppQuestion
+  },
+  setup() {
+    const count = ref(0)
+    return {
+      data: Object.values(data),
+      count,
+    }
   }
 }
 </script>
